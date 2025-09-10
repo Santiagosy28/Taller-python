@@ -1,0 +1,200 @@
+class SistemaReservas:
+    def __init__(self, capacidad):
+        self.__capacidad = capacidad
+        self.__reservas = 0
+    def get_capacidad(self):
+        return self.__capacidad
+    
+    def get_reservas(self):
+        return self.__reservas
+    
+    
+    def reservar(self):
+        if self.__reservas < self.__capacidad:
+            self.__reservas += 1
+            print(f" Reserva realizada. Asientos ocupados: {self.__reservas}/{self.__capacidad}")
+        else:
+            print(" No hay asientos disponibles.")
+
+cine = SistemaReservas(5)
+for i in range(7):
+    cine.reservar()
+
+class FizzBuzz:
+    def __init__(self, inicio=1, fin=100):
+        self.__inicio = inicio
+        self.__fin = fin
+    
+    def get_inicio(self):
+        return self.__inicio
+    
+    def get_fin(self):
+        return self.__fin
+    
+    def jugar(self):
+        for i in range(self.__inicio, self.__fin + 1):
+            if i % 3 == 0 and i % 5 == 0:
+                print("FizzBuzz")
+            elif i % 3 == 0:
+                print("Fizz")
+            elif i % 5 == 0:
+                print("Buzz")
+            else:
+                print(i)
+
+
+juego = FizzBuzz()
+juego.jugar()
+
+
+class Calculadora:
+    def __init__(self):
+        self.__resultado = 0
+    
+    def get_resultado(self):
+        return self.__resultado
+    
+    def operar(self, num1, num2, operacion):
+        if operacion == "suma":
+            self.__resultado = num1 + num2
+        elif operacion == "resta":
+            self.__resultado = num1 - num2
+        elif operacion == "multiplicacion":
+            self.__resultado = num1 * num2
+        elif operacion == "division":
+            if num2 != 0:
+                self.__resultado = num1 / num2
+            else:
+                print("No se puede dividir entre 0.")
+                return
+        else:
+            print("Operación no válida.")
+            return
+        print(f"Resultado: {self.__resultado}")
+
+
+calc = Calculadora()
+calc.operar(10, 5, "suma")
+calc.operar(10, 0, "division")
+
+class Invernadero:
+    def __init__(self):
+        self.__temperatura = 20
+        self.__estado = "inactivo"
+    
+    def set_temperatura(self, temp):
+        self.__temperatura = temp
+    
+    def get_estado(self):
+        return self.__estado
+    
+    def controlar(self):
+        if self.__temperatura < 10:
+            self.__estado = "calefactor encendido"
+        elif self.__temperatura > 25:
+            self.__estado = "ventilador encendido"
+        else:
+            self.__estado = "inactivo"
+        print(f"Temp: {self.__temperatura}°C → {self.__estado}")
+
+
+inv = Invernadero()
+for t in [5, 15, 30]:
+    inv.set_temperatura(t)
+    inv.controlar()
+
+
+class SistemaSeguridad:
+    def __init__(self):
+        self.__alarma_activada = False
+        self.__es_noche = True
+    
+    def set_alarma(self, estado):
+        self.__alarma_activada = estado
+    
+    def detectar(self, s1, s2, s3):
+        if self.__alarma_activada and self.__es_noche:
+            if (s1 + s2 + s3) >= 2:
+                print(" Alarma activada por intrusos.")
+            else:
+                print("Todo en orden.")
+        else:
+            print("Sistema apagado.")
+
+seguridad = SistemaSeguridad()
+seguridad.set_alarma(True)
+seguridad.detectar(1, 1, 0)
+
+
+class ControlLuces:
+    def __init__(self):
+        self.__es_noche = True
+        self.__movimiento = False
+        self.__luces = "apagadas"
+    
+    def set_condiciones(self, noche, movimiento):
+        self.__es_noche = noche
+        self.__movimiento = movimiento
+    
+    def controlar(self):
+        if self.__es_noche and self.__movimiento:
+            self.__luces = "encendidas"
+        else:
+            self.__luces = "apagadas"
+        print(f" Luces {self.__luces}")
+
+
+luces = ControlLuces()
+luces.set_condiciones(True, True)
+luces.controlar()
+luces.set_condiciones(False, True)
+luces.controlar()
+
+
+class AireAcondicionado:
+    def __init__(self):
+        self.__temperatura = 25
+        self.__humedad = 50
+        self.__estado = "apagado"
+    
+    def set_sensores(self, temp, humedad):
+        self.__temperatura = temp
+        self.__humedad = humedad
+    
+    def controlar(self):
+        if (self.__temperatura > 28 and self.__humedad > 60) or self.__temperatura > 30:
+            self.__estado = "encendido"
+        else:
+            self.__estado = "apagado"
+        print(f" Temp: {self.__temperatura}°C | 💧 Hum: {self.__humedad}% → Aire {self.__estado}")
+
+
+aire = AireAcondicionado()
+aire.set_sensores(29, 70)
+aire.controlar()
+aire.set_sensores(31, 40)
+aire.controlar()
+
+class ControlAcceso:
+    def __init__(self):
+        self.__tiene_membresia = False
+        self.__es_empleado = False
+        self.__horario_abierto = True
+    
+    def set_datos(self, membresia, empleado, horario):
+        self.__tiene_membresia = membresia
+        self.__es_empleado = empleado
+        self.__horario_abierto = horario
+    
+    def verificar(self):
+        if (self.__tiene_membresia and self.__horario_abierto) or self.__es_empleado:
+            print("Acceso permitido.")
+        else:
+            print("Acceso denegado.")
+
+
+acceso = ControlAcceso()
+acceso.set_datos(True, False, True)
+acceso.verificar()
+acceso.set_datos(False, False, True)
+acceso.verificar()
