@@ -166,7 +166,7 @@ class AireAcondicionado:
             self.__estado = "encendido"
         else:
             self.__estado = "apagado"
-        print(f" Temp: {self.__temperatura}°C | 💧 Hum: {self.__humedad}% → Aire {self.__estado}")
+        print(f" Temp: {self.__temperatura}°C |  Hum: {self.__humedad}% → Aire {self.__estado}")
 
 
 aire = AireAcondicionado()
