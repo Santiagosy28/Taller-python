@@ -1,0 +1,101 @@
+import tkinter as tk
+from datetime import datetime
+
+class RegistroVehiculos:
+    def __init__(self, master):
+        self.master = master
+        self.master.title("Registro de Vehículos")
+
+        self.registros = []  
+
+      
+        self.label_placa = tk.Label(master, text="Placa:")
+        self.entry_placa = tk.Entry(master)
+
+        self.label_marca = tk.Label(master, text="Marca:")
+        self.entry_marca = tk.Entry(master)
+
+        self.label_color = tk.Label(master, text="Color:")
+        self.entry_color = tk.Entry(master)
+
+        self.label_tipo = tk.Label(master, text="Residente/Visitante")
+        self.entry_tipo = tk.Entry(master)
+
+      
+        self.label_mensaje = tk.Label(master, text="", fg="red")
+
+      
+        self.btn_guardar = tk.Button(master, text="Guardar", command=lambda: self.guardar_datos())
+        self.btn_limpiar = tk.Button(master, text="Limpiar", command=lambda: self.limpiar_campos())
+        self.btn_mostrar = tk.Button(master, text="Registro", command=lambda: self.mostrar_registros())
+
+        self.label_placa.grid(row=0, column=0, padx=5, pady=5, sticky="e")
+        self.entry_placa.grid(row=0, column=1, padx=5, pady=5)
+
+        self.label_marca.grid(row=1, column=0, padx=5, pady=5, sticky="e")
+        self.entry_marca.grid(row=1, column=1, padx=5, pady=5)
+
+        self.label_color.grid(row=2, column=0, padx=5, pady=5, sticky="e")
+        self.entry_color.grid(row=2, column=1, padx=5, pady=5)
+
+        self.label_tipo.grid(row=3, column=0, padx=5, pady=5, sticky="e")
+        self.entry_tipo.grid(row=3, column=1, padx=5, pady=5)
+
+        self.btn_guardar.grid(row=4, column=0, padx=5, pady=10)
+        self.btn_limpiar.grid(row=4, column=1, padx=5, pady=10)
+        self.btn_mostrar.grid(row=5, column=0, columnspan=2, pady=5)
+
+        self.label_mensaje.grid(row=6, column=0, columnspan=2)
+
+    def guardar_datos(self):
+        placa = self.entry_placa.get().strip()
+        marca = self.entry_marca.get().strip()
+        color = self.entry_color.get().strip()
+        tipo = self.entry_tipo.get().strip()
+
+        if not placa or not marca or not color or not tipo:
+            self.label_mensaje.config(text="Todos los campos son obligatorios.", fg="red")
+            return
+
+        vehiculo = {
+            "placa": placa,
+            "marca": marca,
+            "color": color,
+            "tipo": tipo,
+            "hora_ingreso": datetime.now().strftime("%H:%M:%S")
+        }
+
+        self.registros.append(vehiculo)
+        self.label_mensaje.config(text="Vehículo registrado correctamente.", fg="green")
+        self.limpiar_campos()
+
+    def limpiar_campos(self):
+        self.entry_placa.delete(0, tk.END)
+        self.entry_marca.delete(0, tk.END)
+        self.entry_color.delete(0, tk.END)
+        self.entry_tipo.delete(0, tk.END)
+
+    def mostrar_registros(self):
+        if not self.registros:
+            self.label_mensaje.config(text="No hay registros aún.", fg="blue")
+            return
+
+        print("\n=== REGISTROS DE VEHÍCULOS ===")
+        texto = ""
+        for i, v in enumerate(self.registros, start=1):
+            info = f"{i}. Placa: {v['placa']} | Marca: {v['marca']} | Color: {v['color']} | Tipo: {v['tipo']} | Hora: {v['hora_ingreso']}"
+            print(info)
+            texto += info + "\n"
+
+        self.label_mensaje.config(text="Registros mostrados por consola e interfaz.", fg="blue")
+
+      
+        top = tk.Toplevel(self.master)
+        top.title("Vehículos Registrados")
+        tk.Label(top, text=texto, justify="left").pack(padx=10, pady=10)
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = RegistroVehiculos(root)
+    root.mainloop()
